@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="banner-con">
+        <image class="banner" src="../../assets/img/banner.jpg"
+               mode="widthFix" bindtap=""></image>
+    </view>
+    <!--<span style="font-size:14px;"><button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button></span>-->
+    <view class="func-con">
+        <view class="ipt-con">
+            <input placeholder="Please input your telephone number" auto-focus type="number" placeholder-class="plc-cls"
+                   confirm-type="done" bindinput="checkPhone" value="{{tmpPhone}}"/>
+            <span>归属地-湖北联通</span>
+        </view>
+        <view class="prod-list{{enable?' enable':''}}">
+            <view class="item" wx:for="{{itemList}}" wx:key="{{item.id}}" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="topUp">
+                <view class="wrp">
+                    <view class="i-top"><text>{{item.value}}</text><text>Pseo</text></view>
+                    <text class="i-b">售价：{{item.rmb}}元</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="extra-con">
+        <text class="e-title">充值说明</text>
+        <div class="wrp">
+            <text>1、本平台为菲律宾微信用户提供手机费在线充值服务；</text>
+            <text>2、9:00~17:00完成支付，半小时内到账；</text>
+            <text>3、0:00~8:00期间充值当天10:00前到账；</text>
+            <text>4、17:00~24:00期间充值第二天10:00前到账；</text>
+            <text>5、若充值失败，2个工作日内退款到原账号。</text>
+        </div>
+    </view>
+</view>
