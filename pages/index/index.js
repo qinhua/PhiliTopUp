@@ -1,7 +1,9 @@
 //index.js
 //获取应用实例
 const app = getApp()
-import util from '../../utils/util'
+const util = require('../../utils/util.js')
+import config from '../../config.js'
+
 Page({
     data: {
         userInfo: {},
@@ -39,26 +41,49 @@ Page({
                 rmb: 66
             }
         ],
-        enable: false,
+        disabled: false,
+        chooseable: false,
         tmpPhone: null,
         phone: null,
         fee: null
     },
     //事件处理函数
+    getItems: function () {
+        wx.request({
+            url: config.host + config.api.getItems, //仅为示例，并非真实的接口地址
+            data: {
+                openid: '',
+                y: ''
+            },
+            method: 'GET',
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            success: function (res) {
+                console.log(res.data)
+                this.setData({
+                    itemList: res.data
+                })
+            }
+        })
+    },
     onLoad: function () {
+        // 获取本地的手机号
         wx.getStorage({
             key: 'tmpPhone',
-            success: (res)=> {
+            success: (res) => {
                 console.log(res)
-                var p = res.data + ''
-                var lastD = p.substr(0, 3) + ' ' + p.substr(3, 4) + ' ' + p.substr(-4)
+                // var p = res.data + ''
+                // var lastD = p.substr(0, 3) + ' ' + p.substr(3, 4) + ' ' + p.substr(-4)
+                var resD = res.data
+                var realD = resD.replace(/\s/g, '')
                 this.setData({
-                    tmpPhone: lastD,
-                    phone: res.data
+                    tmpPhone: resD,
+                    phone: realD
                 })
-                if (p.length && p.match(/^(13|14|15|16|17|18|19)\d{9}$/)) {
+                if (realD.length && realD.match(/^(13|14|15|16|17|18|19)\d{9}$/)) {
                     this.setData({
-                        enable: true
+                        chooseable: true
                     })
                 }
             }
@@ -68,6 +93,7 @@ Page({
                 userInfo: app.globalData.userInfo,
                 hasUserInfo: true
             })
+            this.getItems()
         } else if (this.data.canIUse) {
             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
             // 所以此处加入 callback 以防止这种情况
@@ -76,6 +102,7 @@ Page({
                     userInfo: res.userInfo,
                     hasUserInfo: true
                 })
+                this.getItems()
             }
         } else {
             // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -86,6 +113,7 @@ Page({
                         userInfo: res.userInfo,
                         hasUserInfo: true
                     })
+                    this.getItems()
                 }
             })
         }
@@ -132,10 +160,10 @@ Page({
                     },
                     method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
                     header: {
-                        'content-type':'application/json'
+                        'content-type': 'application/json'
                     }, // 设置请求的 header
                     success: function (res) {
-                        if (res.status ==1) {//我后台设置的返回值为1是正确
+                        if (res.status == 1) {//我后台设置的返回值为1是正确
                             //存入缓存即可
                             wx.setStorageSync('phone', res.phone);
                         }
@@ -147,55 +175,62 @@ Page({
             }
         })
     },
+    clear: function () {
+        this.setData({
+            disabled: false,
+            chooseable: false,
+            tmpPhone: null,
+            phone: null,
+            fee: null
+        })
+    },
+    history: function () {
+        wx.navigateTo({
+            url: '../history/history'
+        })
+    },
     checkPhone: function (e) {
-        console.log(e)
-        var val = e.detail.value.replace(/\s/g, '')
-        //console.log(val.length)
-        if (val.length > 11) {
-            val = val.substr(0, 11)
-        } else if (val.length === 11) {
+        // console.log(e)
+        var val = e.detail.value
+        var valLen = e.detail.value.replace(/\s/g, '')
+        if (val.length > 12) {
+            //   val = val.substr(0, 11)
             this.setData({
-                enable: true
+                disabled: true,
+                chooseable: false
+            })
+        }
+        if (valLen.length === 11) {
+            this.setData({
+                disabled: false,
+                chooseable: true
             })
         } else {
             this.setData({
-                enable: false
+                chooseable: false
             })
         }
-
-        if (this.data.phone) {
-            console.log(val,this.data.phone)
-            if (val.length > this.data.phone.length) { // 文本框中输入
-                console.log(22201)
+        // 空格分割手机号
+        if (this.data.phone && this.data.phone.length) {
+            console.log(val.length, this.data.phone.length)
+            if (valLen.length >= this.data.phone.length) { // 文本框中输入
                 if (val.length === 3 || val.length === 8) {
                     val += ' '
                 }
             } else { // 文本框中删除
-                console.log(22202)
                 if (val.length === 9 || val.length === 4) {
                     val = val.replace(/\s/g, '')
                 }
             }
         }
-        /*else {
-            console.log(333)
-            if (val.length === 3 || val.length === 8) {
-                val += ' '
-            }
-        }*/
         this.setData({
-            phone: val,
-            //tmpPhone: val.substr(0, 3) + ' ' + val.substr(3, 4) + ' ' + val.substr(-4)
+            phone: val.replace(/\s/g, ''),
             tmpPhone: val
         })
     },
     topUp: function (e) {
-        wx.setStorage({
-            key: 'tmpPhone',
-            data: 13545569695
-        })
         /*校验手机号*/
-        if (!this.data.enable) {
+        if (!this.data.chooseable) {
             wx.showToast({
                 title: 'Please input telephone number！',
                 icon: 'none',
@@ -206,7 +241,7 @@ Page({
         /*缓存手机号*/
         wx.setStorage({
             key: 'tmpPhone',
-            data: this.data.phone
+            data: this.data.tmpPhone
         })
         /*发起支付*/
         wx.requestPayment({
@@ -215,9 +250,9 @@ Page({
             'package': '',
             'signType': 'MD5',
             'paySign': '',
-            'success':function(res){
+            'success': function (res) {
             },
-            'fail':function(res){
+            'fail': function (res) {
             }
         })
     }

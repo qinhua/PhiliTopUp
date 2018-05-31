@@ -7,11 +7,12 @@
     <!--<span style="font-size:14px;"><button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button></span>-->
     <view class="func-con">
         <view class="ipt-con">
-            <input placeholder="Please input your telephone number" auto-focus type="number" placeholder-class="plc-cls"
+            <input placeholder="Please input your telephone number" auto-focus maxlength="13" focus="{{disabled}}" type="number" placeholder-class="plc-cls"
                    confirm-type="done" bindinput="checkPhone" value="{{tmpPhone}}"/>
-            <span>归属地-湖北联通</span>
+            <text>归属地-湖北联通</text>
+            <icon type="clear" size="{{20}}" color="#ddd" bindtap="clear" wx:if="{{tmpPhone}}"/>
         </view>
-        <view class="prod-list{{enable?' enable':''}}">
+        <view class="prod-list{{chooseable?' enable':''}}">
             <view class="item" wx:for="{{itemList}}" wx:key="{{item.id}}" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="topUp">
                 <view class="wrp">
                     <view class="i-top"><text>{{item.value}}</text><text>Pseo</text></view>
@@ -30,4 +31,5 @@
             <text>5、若充值失败，2个工作日内退款到原账号。</text>
         </div>
     </view>
+    <button class="btn-my" type="button" bindtap="history"></button>
 </view>
