@@ -50,7 +50,7 @@ Page({
     //事件处理函数
     getItems: function () {
         wx.request({
-            url: config.host + config.api.getItems, //仅为示例，并非真实的接口地址
+            url: config.host + config.api.getItems,
             data: {
                 openid: '',
                 y: ''
@@ -158,7 +158,7 @@ Page({
                         'iv': e.detail.iv,
                         'code': res.code
                     },
-                    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                    method: 'GET',
                     header: {
                         'content-type': 'application/json'
                     }, // 设置请求的 header

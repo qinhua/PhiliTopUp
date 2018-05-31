@@ -8,3 +8,60 @@ app {
   min-height: 100%;
   padding: 0;
 }
+
+.list {
+  width: 100%;
+  .item {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 30rpx 20rpx;
+    background: #fff;
+    //&:not(:last-child){
+    border-bottom: 1px solid #eee;
+    //}
+  }
+  .wrp {
+    width: 100%;
+  }
+  .i-t {
+    display: block;
+    width: 100%;
+    font-size: 26rpx;
+    color: #666;
+    text{
+      font-size: 30rpx;
+      color:red;
+    }
+  }
+  .i-b {
+    display: block;
+    width: 100%;
+    font-size: 26rpx;
+    color: #999;
+  }
+  .i-status {
+    position: absolute;
+    top: 50%;
+    right: 20rpx;
+    display: block;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+    font-size: 26rpx;
+    color: #999;
+    &.sta0 {
+      color: #FCAD00;
+    }
+    &.sta1 {
+      color: #00C777;
+    }
+    &.sta2 {
+      color: #EB3941;
+    }
+    &.sta3 {
+      color: #999;
+    }
+  }
+}

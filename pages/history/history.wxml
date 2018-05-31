@@ -1,6 +1,12 @@
 <!--history.wxml-->
-<view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log">
-    <text class="log-item">{{index + 1}}. {{log}}</text>
-  </block>
+<view class="container">
+  <view class="list">
+    <view class="item" wx:for="{{list}}" wx:key="{{item.id}}">
+      <view class="wrp">
+        <text class="i-t">{{item.phone}} 充值 <text>{{item.value}}Pseo</text></text>
+        <text class="i-b">{{item.creatTime}}</text>
+      </view>
+      <text class="i-status {{'sta'+ item.status}}">{{item.statusTxt}}</text>
+    </view>
+  </view>
 </view>
