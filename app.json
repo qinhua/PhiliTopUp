@@ -1,12 +1,14 @@
 {
-  "pages":[
+  "pages": [
     "pages/history/history",
     "pages/index/index"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "话费充值",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+//    "onReachBottomDistance": 20
   }
 }

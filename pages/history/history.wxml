@@ -2,11 +2,12 @@
 <view class="container">
   <view class="list">
     <view class="item" wx:for="{{list}}" wx:key="{{item.id}}">
+      <image class="i-ico" src="../../assets/img/ico_p.png" mode="widthFix"></image>
       <view class="wrp">
-        <text class="i-t">{{item.phone}} 充值 <text>{{item.value}}Pseo</text></text>
-        <text class="i-b">{{item.creatTime}}</text>
+        <text class="i-t">手机充值<text>{{item.value}}Pseo</text></text>
+        <text class="i-p">[ {{item.phone}} ]</text>
+        <text class="i-b">{{item.createTime}}<text class="i-status {{'sta'+ item.status}}">{{item.statusTxt}}</text></text>
       </view>
-      <text class="i-status {{'sta'+ item.status}}">{{item.statusTxt}}</text>
     </view>
   </view>
 </view>

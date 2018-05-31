@@ -75,8 +75,8 @@ Page({
                 console.log(res)
                 // var p = res.data + ''
                 // var lastD = p.substr(0, 3) + ' ' + p.substr(3, 4) + ' ' + p.substr(-4)
-                var resD = res.data
-                var realD = resD.replace(/\s/g, '')
+                let resD = res.data
+                let realD = resD.replace(/\s/g, '')
                 this.setData({
                     tmpPhone: resD,
                     phone: realD
