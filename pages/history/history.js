@@ -90,5 +90,5 @@ Page({
     },
     onReachBottom: function () {
         this.getList(true)
-    },
+    }
 })
