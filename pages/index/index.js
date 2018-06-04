@@ -212,7 +212,7 @@ Page({
     }
     // 空格分割手机号
     if (this.data.phone && this.data.phone.length) {
-      console.log(val.length, this.data.phone.length)
+      // console.log(val.length, this.data.phone.length)
       if (valLen.length >= this.data.phone.length) { // 文本框中输入
         if (val.length === 3 || val.length === 8) {
           val += ' '

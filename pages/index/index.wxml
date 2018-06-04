@@ -7,7 +7,7 @@
     <!--<span style="font-size:14px;"><button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号</button></span>-->
     <view class="func-con">
         <view class="ipt-con">
-            <input placeholder="Please input your telephone number" auto-focus maxlength="13" focus="{{disabled}}" type="number" placeholder-class="plc-cls"
+            <input placeholder="Please input your telephone number" maxlength="13" focus="{{disabled}}" type="number" placeholder-class="plc-cls"
                    confirm-type="done" bindinput="checkPhone" value="{{tmpPhone}}"/>
             <text>归属地-湖北联通</text>
             <icon type="clear" size="{{20}}" color="#ddd" bindtap="clear" wx:if="{{tmpPhone}}"/>
